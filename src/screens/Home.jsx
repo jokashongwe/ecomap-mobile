@@ -13,7 +13,7 @@ export default function Home({ navigation, route }) {
     const { token } = route.params;
 
     const [stepIndex, setStepIndex] = useState(0);
-    const [identity, setIdentity] = useState({});
+    
     const [address, setAddress] = useState({});
     const [fields, setFields] = useState([])
 
@@ -26,7 +26,7 @@ export default function Home({ navigation, route }) {
             .then(data => {
                 if (data) {
                     let elts = []
-                    
+
                     data.data.forEach((it) => {
                         elts.push({
                             'label': it.name,
@@ -73,7 +73,7 @@ export default function Home({ navigation, route }) {
                     <Text style={styles.sectionHeader}  >{stepIndex + 1} - Informations Personnelles</Text>
                 </View>
                 <View style={{ width: '50%', alignSelf: 'flex-end' }} >
-                    <Button mid text={stepIndex == 5 ? "Terminer" : "Suivant"} onPress={() => {
+                    <Button mid text={stepIndex == 2 ? "Terminer" : "Suivant"} onPress={() => {
                         setStepIndex(stepIndex + 1)
                     }} />
                 </View>
@@ -105,7 +105,7 @@ export default function Home({ navigation, route }) {
                     <Button color={"#999"} mid text={"Précédent"} onPress={() => {
                         setStepIndex(stepIndex - 1)
                     }} />
-                    <Button mid text={stepIndex == 5 ? "Terminer" : "Suivant"} onPress={() => {
+                    <Button mid text={stepIndex == 2 ? "Terminer" : "Suivant"} onPress={() => {
                         setStepIndex(stepIndex + 1)
                     }} />
                 </View>
@@ -128,6 +128,13 @@ export default function Home({ navigation, route }) {
                     />
 
                     <TextField
+                        placeholder="Province"
+                    />
+                    <TextField
+                        placeholder="Territoire"
+                    />
+
+                    <TextField
                         placeholder="Secteur"
                     />
                     <TextField
@@ -139,13 +146,15 @@ export default function Home({ navigation, route }) {
                     <Button mid color={"#999"} text={"Précédent"} onPress={() => {
                         setStepIndex(stepIndex - 1)
                     }} />
-                    <Button mid text={stepIndex == 5 ? "Terminer" : "Suivant"} onPress={() => {
+                    <Button mid text={stepIndex == 2 ? "Terminer" : "Suivant"} onPress={() => {
                         setStepIndex(stepIndex + 1)
                     }} />
                 </View>
             </View>
         )
     }
+
+    
 
     const RenderSteps = ({ index }) => {
         switch (index) {
