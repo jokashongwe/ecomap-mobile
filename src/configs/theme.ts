@@ -1,0 +1,23 @@
+
+
+export type Theme = {
+    bg: string,
+    textColor: string,
+    textSecondaryColor: string,
+    primary: string,
+    secondary: string,
+    btnPrimaryTextColor: string,
+    btnSecondaryTextColor: string,
+    illustration: any
+}
+
+export const LightTheme: Theme = {
+    bg: "#fff",
+    textColor: "#222",
+    textSecondaryColor: "#999",
+    primary: "#0F67B1",
+    secondary: '#96C9F4',
+    btnPrimaryTextColor: "#FFF",
+    btnSecondaryTextColor: "#FFF",
+    illustration: null
+}
