@@ -1,28 +1,20 @@
 import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import Navigator from './routes/route';
-import { Button, createTheme, ThemeProvider } from '@rneui/themed';
+//import { createTheme, ThemeProvider } from '@rneui/themed';
 
-const theme = createTheme({
-    lightColors: {
-      primary: 'red',
-    },
-    darkColors: {
-      primary: 'blue',
-    },
-    components: {
-      Button: {
-        raised: true,
-      },
-    },
-  });
+const AppContext = React.createContext();
 
 export default function App() {
-    return (
-        <NavigationContainer>
-            <ThemeProvider theme={theme} >
-                <Navigator />
-            </ThemeProvider>
-        </NavigationContainer>
-    );
+
+  const [authToken, setAuthToken] = React.useState();
+  const [userProfile, setUserProfile] = React.useState();
+
+  return (
+    <NavigationContainer>
+      <AppContext.Provider value={{ authToken, setAuthToken, userProfile, setUserProfile }} >
+        <Navigator />
+      </AppContext.Provider>
+    </NavigationContainer>
+  );
 }
