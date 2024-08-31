@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { StyleSheet, Text, View, Alert, TouchableOpacity, Image, FlatList, Pressable } from "react-native"
+import { StyleSheet, Text, View, Alert, TouchableOpacity, Image, FlatList, Pressable, RefreshControl } from "react-native"
 import RNPickerSelect from 'react-native-picker-select';
 import { LightTheme } from "../configs/theme";
 
@@ -92,6 +92,8 @@ export default function Home({ navigation, route }) {
 
     const [producers, setProducers] = useState([])
 
+    const [refreshing, setRefreshing] = useState(false)
+
     const EmptyList = () => {
         return (
             <View>
@@ -110,6 +112,18 @@ export default function Home({ navigation, route }) {
             console.log("error: ", error)
         }
     }
+
+    const onRefresh = React.useCallback(() => {
+        setRefreshing(true);
+        init().then(() => {
+            console.log("LOADED")
+            setRefreshing(false);
+        })
+            .catch(error => {
+                setRefreshing(false);
+                console.log("Error: ", error)
+            })
+    }, []);
 
     useEffect(() => {
         init().then(() => {
@@ -143,6 +157,10 @@ export default function Home({ navigation, route }) {
         return (
             <FlatList
                 data={data}
+                refreshControl={
+                    <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+                }
+
                 showsVerticalScrollIndicator={false}
                 renderItem={ProducerItem}
                 ListEmptyComponent={EmptyList}

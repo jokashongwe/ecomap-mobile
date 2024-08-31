@@ -123,6 +123,7 @@ export default function ProducerForm({ producer, mode, navigation }) {
 
             navigation.navigate("Home")
         } catch (error) {
+            console.log(error)
             Alert.alert("Erreur de connexion", "Impossible de sauvegarder les données!")
             setLoading(false)
         }

@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://192.168.190.84:8000/api/v1';
+const API_URL = 'https://kwiludigital.com/api/v1';
 
 export async function auth(username, password) {
   const requestUrl = API_URL + '/auth';
