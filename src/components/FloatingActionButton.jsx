@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, SafeAreaView, View, Pressable } from 'react-native';
+import { StyleSheet, SafeAreaView, View, Pressable, TouchableOpacity } from 'react-native';
 import Animated, {
   withDelay,
   interpolate,
@@ -20,7 +20,7 @@ const SPRING_CONFIG = {
 
 const OFFSET = 60;
 
-export default FloatingActionButton = ({ isExpanded, index, buttonLetter }) => {
+export default FloatingActionButton = ({ isExpanded, index, buttonLetter, onPress }) => {
   const animatedStyles = useAnimatedStyle(() => {
     // highlight-next-line
     const moveValue = isExpanded.value ? OFFSET * index : 0;
@@ -41,7 +41,7 @@ export default FloatingActionButton = ({ isExpanded, index, buttonLetter }) => {
   });
 
   return (
-    <AnimatedPressable style={[animatedStyles, styles.shadow, styles.button]}>
+    <AnimatedPressable onPress={onPress} style={[animatedStyles, styles.shadow, styles.button]}>
       <Animated.Text style={styles.content}>{buttonLetter}</Animated.Text>
     </AnimatedPressable>
   );

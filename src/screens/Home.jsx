@@ -138,32 +138,15 @@ export default function Home({ navigation, route }) {
             />
             <View style={styles.buttonContainer}>
                 <AnimatedPressable
-                    onPress={handlePress}
+                    onPress={() => {
+                        console.log("ICI!")
+                        navigation.navigate('AddProducer')
+                    }}
                     style={[styles.shadow, mainButtonStyles.button]}>
                     <Animated.Text style={[plusIconStyle, mainButtonStyles.content]}>
                         +
                     </Animated.Text>
                 </AnimatedPressable>
-
-                <FloatingActionButton
-                    isExpanded={isExpanded}
-                    index={3}
-                    buttonLetter={'Nouveau'}
-                />
-
-                <FloatingActionButton
-                    isExpanded={isExpanded}
-                    index={2}
-                    buttonLetter={'Rechercher'}
-                />
-
-                <FloatingActionButton
-                    isExpanded={isExpanded}
-                    index={1}
-                    buttonLetter={'Mon Profil'}
-                />
-
-
             </View>
         </View>
     )

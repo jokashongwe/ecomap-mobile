@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://10.0.2.2:8080/api/v1';
+const API_URL = 'http://192.168.190.84:8000/api/v1';
 
 export async function auth(username, password) {
   const requestUrl = API_URL + '/auth';
@@ -16,14 +16,18 @@ export async function auth(username, password) {
 }
 
 export async function createdProducer(productData, token) {
-  const requestUrl = API_URL + '/producers';
-  const res = await axios.post(requestUrl, productData, {
-    responseType: 'json',
-    headers: {
-      Authorization: 'Bearer ' + token,
-    },
-  });
-  return res.data;
+  try {
+    
+    const requestUrl = API_URL + '/producers';
+    console.log("ICI")
+    const res = await axios.post(requestUrl, productData, {
+      responseType: 'json',
+    });
+    return res.data;
+  } catch (error) {
+    console.log("createdProducer: ", error)
+    return Promise.resolve({})
+  }
 }
 
 export async function getProducts(token) {

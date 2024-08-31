@@ -25,13 +25,14 @@ export default function TextField({ setText, placeholder, text, keyboardType, le
 const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
-        height: 60,
+        height: 50,
         justifyContent: "center",
         alignItems: "center",
         borderRadius: 8,
         backgroundColor: LightTheme.bg,
         width: '90%',
         marginVertical: 10,
-        elevation: 2
+        elevation: 2,
+        paddingLeft: 10
     }
 })
