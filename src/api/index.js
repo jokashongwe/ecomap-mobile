@@ -16,18 +16,20 @@ export async function auth(username, password) {
 }
 
 export async function createdProducer(productData, token) {
-  try {
-    
-    const requestUrl = API_URL + '/producers';
-    console.log("ICI")
-    const res = await axios.post(requestUrl, productData, {
-      responseType: 'json',
-    });
-    return res.data;
-  } catch (error) {
-    console.log("createdProducer: ", error)
-    return Promise.resolve({})
-  }
+  const requestUrl = API_URL + '/producers';
+  return axios.post(requestUrl, productData, {
+    responseType: 'json',
+  });
+}
+
+export function getProducers(token) {
+  const requestUrl = API_URL + '/producers';
+  return axios.get(requestUrl, null, {
+    responseType: 'json',
+    headers: {
+      Authorization: 'Bearer ' + token,
+    },
+  });
 }
 
 export async function getProducts(token) {

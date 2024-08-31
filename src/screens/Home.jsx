@@ -6,7 +6,7 @@ import { LightTheme } from "../configs/theme";
 import Ionicon from "react-native-vector-icons/Ionicons"
 
 import Logo from "../../assets/images/logo-rmd.png"
-import { producteurs } from "../fake/data";
+//import { producteurs } from "../fake/data";
 
 import Animated, {
     withDelay,
@@ -18,6 +18,7 @@ import Animated, {
 } from 'react-native-reanimated';
 
 import FloatingActionButton from "../components/FloatingActionButton";
+import { getProducers } from "../api";
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
@@ -64,13 +65,11 @@ export default function Home({ navigation, route }) {
                 alignSelf: "center",
                 marginVertical: 10,
                 elevation: 2,
-                height: 100,
+                paddingBottom: 5,
+                height: 75,
                 backgroundColor: LightTheme.bg,
             }} >
-                <Image
-                    source={item?.imagePrimary}
-                    style={{ width: 100, height: 100, resizeMode: "cover" }}
-                />
+
                 <View style={{
                     padding: 10
                 }} >
@@ -91,6 +90,8 @@ export default function Home({ navigation, route }) {
         )
     }
 
+    const [producers, setProducers] = useState([])
+
     const EmptyList = () => {
         return (
             <View>
@@ -98,6 +99,26 @@ export default function Home({ navigation, route }) {
             </View>
         )
     }
+
+    const init = async () => {
+        try {
+            const result = await getProducers()
+            const { data } = result
+            console.log("DATA: ", data)
+            setProducers(data?.producers)
+        } catch (error) {
+            console.log("error: ", error)
+        }
+    }
+
+    useEffect(() => {
+        init().then(() => {
+            console.log("LOADED")
+        })
+            .catch(error => {
+                console.log("Error")
+            })
+    }, [])
 
     const isExpanded = useSharedValue(false);
 
@@ -134,7 +155,7 @@ export default function Home({ navigation, route }) {
         <View style={styles.container} >
             <HomeHeader />
             <ProducerList
-                data={producteurs}
+                data={producers}
             />
             <View style={styles.buttonContainer}>
                 <AnimatedPressable

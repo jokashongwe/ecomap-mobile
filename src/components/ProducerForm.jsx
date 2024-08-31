@@ -1,4 +1,4 @@
-import { ScrollView, StyleSheet, Text, View, ActivityIndicator } from "react-native";
+import { ScrollView, StyleSheet, Text, View, ActivityIndicator, Alert } from "react-native";
 import TextField from "./TextField";
 import { useState } from "react";
 import Button from "./Button";
@@ -11,7 +11,7 @@ import { LightTheme } from "../configs/theme";
 import GetLocation from 'react-native-get-location'
 import { createdProducer } from "../api";
 
-export default function ProducerForm({ producer, mode }) {
+export default function ProducerForm({ producer, mode, navigation }) {
 
     const [loading, setLoading] = useState(false)
 
@@ -63,36 +63,43 @@ export default function ProducerForm({ producer, mode }) {
             let fertilizer = ""
             engrais.forEach(eng => fertilizer += eng)
 
+            const birthdate = (new Date().getFullYear() - age) + "-01-01"  
+
+            console.log({birthdate})
+
             let data = {
                 "producer": {
-                    "firtsname": name,
+                    "firstname": name,
                     "lastname": lastName,
                     "middlename": "",
                     "phone": phone,
                     "gender": selectedGender,
                     "numberOfChildren": 0,
                     "maritalStatus": maritalStatus,
-                    "birthdate": "01-01-" + (new Date().getFullYear() - age),
+                    "birthdate": birthdate,
                     "handicap": handicap,
                     "averageMonthIncome": averageMonthIncome,
+                    "corporations": null,
                     "address": {
                         "country": "DR Congo",
                         "province": province,
-                        "city": "",
+                        "city": "NA",
                         "territory": territoire,
                         "sector": secteur,
                         "village": village
                     }
                 },
+                
                 "fields": [
                     {
                         "surface_acres": surface,
                         "status": selectedStatus,
                         "products": cultures,
+                        "productId": "",
                         "address": {
                             "province": province,
-                            "city": "",
                             "territory": territoire,
+                            "district": territoire,
                             "sector": secteur,
                             "village": village,
                             "lat": location.latitude,
@@ -110,11 +117,13 @@ export default function ProducerForm({ producer, mode }) {
                 ],
             }
 
-            let resD = createdProducer(data, null)
-            console.log("result: ", resD)
+            let resD = await createdProducer(data, null)
+            
             setLoading(false)
+
+            navigation.navigate("Home")
         } catch (error) {
-            console.log("Error!")
+            Alert.alert("Erreur de connexion", "Impossible de sauvegarder les données!")
             setLoading(false)
         }
     }
